@@ -38,7 +38,7 @@
         <div class="mt-3">
             <lable>IdMoiQuanHe</lable>
             <select class="form-select" aria-label="Default select example" name="idMoiQuanHe">
-                <option value="${b.idMoiQuanHe}" hidden selected>${b.idMoiQuanHe}</option>
+                <option value="${b.moiQuanHe.id}" hidden selected>${b.moiQuanHe.ten}</option>
                 <c:forEach items="${listMQH}" var="b2" varStatus="i">
                     <option value="${b2.id}">${b2.ten}</option>
                 </c:forEach>
