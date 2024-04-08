@@ -58,7 +58,7 @@
         <th>Hanh Dong</th>
         </thead>
         <tbody>
-        <c:forEach items="${listB}" var="a" varStatus="i">
+        <c:forEach items="${currentPageProducts}" var="a" varStatus="i">
             <tr>
                 <td>${i.count}</td>
                 <td>${a.ma}</td>
@@ -75,6 +75,22 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <c:if test="${pageNumber > 1}">
+                    <a href="/HienThi?page=${pageNumber - 1}" class="btn-page"><<</a>
+                </c:if>
+
+                <span class="btn-page-number">${pageNumber}</span>
+
+                <c:if test="${pageNumber < totalPages}">
+                    <a href="/HienThi?page=${pageNumber + 1}" class="btn-page">>></a>
+                </c:if>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
