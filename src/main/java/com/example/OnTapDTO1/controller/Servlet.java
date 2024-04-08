@@ -62,6 +62,7 @@ public class Servlet extends HttpServlet {
         request.setAttribute("listB", listB);
         listMQH = service2.getAll();
         request.setAttribute("listMQH", listMQH);
+        pagination(listB,request,response);
         request.getRequestDispatcher("/view/ListBan.jsp").forward(request, response);
     }
 
@@ -127,5 +128,39 @@ public class Servlet extends HttpServlet {
         BanRequest ban=BanRequest.builder().ma(ma).ten(ten).soThich(soThich).gioiTinh(Integer.parseInt(gioiTinh)).idMoiQuanHe(idMoiQuanHe).build();
         service.addRequest(ban);
         response.sendRedirect("/HienThi");
+    }
+
+    public void pagination(List<BanResponse> list, HttpServletRequest req, HttpServletResponse resp){
+        List<BanResponse> bans = list;
+        // phân trang
+        int pageNumber = 1; //  trang hiện tại
+        int pageSize = 3; // số lượng sản phẩm trên mỗi trang
+        int totalProducts = bans.size(); //tổng sản phẩm hiện có
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize); // tổng số trang để chứa sản phẩm
+
+        String pageParam = req.getParameter("page"); // lấy ra trang hiện tại
+        if (pageParam != null && !pageParam.isEmpty()) {
+            pageNumber = Integer.parseInt(pageParam); // check và gán cho số trang
+        }
+        if (pageNumber < 1) {
+            pageNumber = 1;
+        } else if (pageNumber > totalPages) {
+            // nếu số trang hiện tại lớn hơn tổng số trang để chứa sản phẩm thì
+            // gán trang hiện tại bằng tổng trang , tức là trang cuối cùng
+            pageNumber = totalPages;
+        }
+
+        int startIndex = (pageNumber - 1) * pageSize; // vị trí bắt đầu lấy ra sản phẩm để in lên trang
+        int endIndex = Math.min(startIndex + pageSize, totalProducts);
+        // vị trí cuối cùng, nếu startIndex + pageSize vượt quá phần tử trong mảng
+        // thì lấy số lượng phẩn tử trong mảng làm điểm cuối cùng
+
+        List<BanResponse> currentPageProducts = bans.subList(startIndex, endIndex);
+        // lấy ra list sản phẩm và dùng sublist để lấy ra 12 sản phẩm bằng start và end
+
+        // gửi lên server và in ra thôi
+        req.setAttribute("currentPageProducts", currentPageProducts);
+        req.setAttribute("pageNumber", pageNumber);
+        req.setAttribute("totalPages", totalPages);
     }
 }
