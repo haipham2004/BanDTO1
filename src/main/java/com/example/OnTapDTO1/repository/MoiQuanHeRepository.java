@@ -1,19 +1,35 @@
 package com.example.OnTapDTO1.repository;
 
 import com.example.OnTapDTO1.config.HibernateConfig;
-import com.example.OnTapDTO1.responese.MoiQuanHeResponse;
+import com.example.OnTapDTO1.entity.Ban;
+import com.example.OnTapDTO1.entity.MoiQuanHe;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MoiQuanHeRepository {
-    List<MoiQuanHeResponse> listMQH=new ArrayList<>();
+    List<MoiQuanHe> listMQH=new ArrayList<>();
 
-    public List<MoiQuanHeResponse> getAll(){
+    public List<MoiQuanHe> getAll(){
         Session session= HibernateConfig.getFACTORY().openSession();
-        listMQH=session.createQuery("SELECT new com.example.OnTapDTO1.responese.MoiQuanHeResponse(mqh.id,mqh.ma,mqh.ten) FROM MoiQuanHe mqh",MoiQuanHeResponse.class).getResultList();
+        listMQH=session.createQuery(" FROM MoiQuanHe mqh",MoiQuanHe.class).getResultList();
         return listMQH;
+    }
+
+    public MoiQuanHe getOne(int id){
+        MoiQuanHe mqh=null;
+        Transaction transaction=null;
+        try(Session session= HibernateConfig.getFACTORY().openSession()){
+            transaction=session.beginTransaction();
+            mqh=session.get(MoiQuanHe.class,id);
+            transaction.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return mqh;
     }
 
     public static void main(String[] args) {

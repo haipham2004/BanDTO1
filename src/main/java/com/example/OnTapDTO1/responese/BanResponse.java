@@ -23,4 +23,6 @@ public class BanResponse {
     private int gioiTinh;
 
     private int idMoiQuanHe;
+
+    private String tenMoiQuanHe;
 }

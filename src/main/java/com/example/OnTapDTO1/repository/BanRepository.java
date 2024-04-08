@@ -15,7 +15,7 @@ public class BanRepository {
 
     public List<BanResponse> getAll(){
         Session session= HibernateConfig.getFACTORY().openSession();
-        listB=session.createQuery("SELECT new com.example.OnTapDTO1.responese.BanResponse(ban.id,ban.ma,ban.ten,ban.soThich,ban.gioiTinh,ban.idMoiQuanHe) " +
+        listB=session.createQuery("SELECT new com.example.OnTapDTO1.responese.BanResponse(ban.id,ban.ma,ban.ten,ban.soThich,ban.gioiTinh,ban.moiQuanHe.id,ban.moiQuanHe.ten) " +
                 "From Ban ban",BanResponse.class).getResultList();
         return listB;
     }

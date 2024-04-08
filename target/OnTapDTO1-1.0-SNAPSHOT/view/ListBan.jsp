@@ -38,7 +38,6 @@
             </div>
             <div class="mt-3">
                 <lable>IdMoiQuanHe</lable>
-                <%--                <input type="text" class="form-control" name="IdMoiQuanHe">--%>
                 <select class="form-select" aria-label="Default select example" name="idMoiQuanHe">
                     <c:forEach items="${listMQH}" var="b" varStatus="i">
                         <option value="${b.id}">${b.ten}</option>
@@ -66,19 +65,13 @@
                 <td>${a.ten}</td>
                 <td>${a.soThich}</td>
                 <td>${a.gioiTinh}</td>
+                <td>${a.tenMoiQuanHe} </td>
+
                 <td>
-                    <c:forEach items="${listMQH}" var="b">
-                        <c:if test="${a.idMoiQuanHe eq b.id}">
-                            ${b.ten}
-                        </c:if>
-                    </c:forEach>
-                </td>
-                <td>
-                    <a href="/ViewUpdate?id=${a.id}" class="btn btn-success">Update</a>
-                    <a href="/Delete?id=${a.id}" class="btn btn-success">Delete</a>
+                    <a href="/ViewUpdate?id=${a.id}" class="btn btn-success" onclick="return confirm('ViewUpdate?')">Update</a>
+                    <a href="/Delete?id=${a.id}" class="btn btn-success" onclick="return confirm('Xoá?')">Delete</a>
                 </td>
             </tr>
-
         </c:forEach>
         </tbody>
     </table>
